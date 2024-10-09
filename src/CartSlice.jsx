@@ -8,21 +8,22 @@ export const CartSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
         const item = action.payload
-        const cart = state.items
+        var cart = state.items
         cart.push({name:item.name,image:item.image,cost:item.cost,quantity:1})
     },
     removeItem: (state, action) => {
-        const item = action.payload
-        var cart = state.items
-        cart=cart.filter((items)=>(items.name!==item.name))
+        const name = action.payload.name
+        const cart = state.items
+        state.items = cart.filter((items)=>(items.name!==name))
     },
     updateQuantity: (state, action) => {
         const {name,quantity} = action.payload
-        var cart = state.cart
-        cart = cart.map((items)=>{
+        const cart = state.items
+        state.items = cart.map((items)=>{
             if (items.name===name){
-                items.quantity = quantity
+                items.quantity=quantity
             }
+            return items
         })
     
     },
